@@ -260,3 +260,34 @@ function calculate_button_Callback(hObject, eventdata, handles)
 % hObject    handle to calculate_button (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+% IMPORTANT INFORMATION:
+% velocity units: meters/second
+% angle units: degrees
+
+x_0_number = str2double(get(handles.x_0_edit,'String'));
+y_0_number = str2double(get(handles.y_0_edit,'String'));
+
+velocity_number = str2double(get(handles.velocity_edit,'String'));
+angle_number = str2double(get(handles.angle_edit,'String'));
+
+velocity_x = cosd(angle_number) * velocity_number;
+velocity_y = sind(angle_number) * velocity_number;
+
+gravity = 9.8;
+
+% Note: we can get the time when the object is at the top, y_final = 0.
+% Then find time.
+time = ((velocity_y) + sqrt(velocity_y^2 - 4 * gravity * 0.5 * (-y_0_number))) / (2 * gravity * 0.5);
+t = 0:time / 100:time;
+
+x_final = x_0_number + velocity_x * t;
+y_final = y_0_number + velocity_y * t - 0.5 * gravity * t.^2;
+
+plot(x_final, y_final);
+
+range = x_0_number + velocity_x * time;
+max_height = velocity_y^2 / 2 * gravity;
+
+set(handles.range_edit, 'String', range);
+set(handles.max_height_edit,'String',max_height);

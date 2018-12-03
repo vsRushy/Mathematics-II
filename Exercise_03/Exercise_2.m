@@ -268,12 +268,11 @@ function calculate_button_Callback(hObject, eventdata, handles)
 x_0_number = str2double(get(handles.x_0_edit,'String'));
 y_0_number = str2double(get(handles.y_0_edit,'String'));
 
-velocity_number = str2double(get(handles.velocity_edit,'String'));
+velocity_number = (50*get(handles.velocity_slider_edit,'Value'))/get(handles.velocity_slider_edit,'Max');
+set(handles.velocity_static_number, 'String', velocity_number);
+
 angle_number = (90*get(handles.angle_slider_edit,'Value'))/get(handles.angle_slider_edit,'Max');
-set(handles.angle_edit, 'String', angle_number);
-%angle_number = str2double(get(handles.angle_edit,'String'));
-
-
+set(handles.angle_static_number, 'String', angle_number);
 
 velocity_x = cosd(angle_number) * velocity_number;
 velocity_y = sind(angle_number) * velocity_number;
@@ -282,7 +281,7 @@ gravity = 9.8;
 
 % Note: we can get the time when the object is at the top, y_final = 0.
 % Then find time.
-time = ((velocity_y) + sqrt(velocity_y^2 - 4 * gravity * 0.5 * (-y_0_number))) / (2 * gravity * 0.5);
+time = (velocity_y / gravity) * 2;
 t = 0:time / 100:time;
 
 x_final = x_0_number + velocity_x * t;
@@ -291,7 +290,7 @@ y_final = y_0_number + velocity_y * t - 0.5 * gravity * t.^2;
 plot(x_final, y_final);
 
 range = x_0_number + velocity_x * time;
-max_height = velocity_y^2 / 2 * gravity;
+max_height = y_0_number + velocity_y * time / 2 - 0.5 * gravity * (time / 2)^2;
 
 set(handles.range_edit, 'String', range);
 set(handles.max_height_edit,'String',max_height);

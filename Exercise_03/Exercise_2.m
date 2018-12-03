@@ -287,10 +287,11 @@ t = 0:time / 100:time;
 x_final = x_0_number + velocity_x * t;
 y_final = y_0_number + velocity_y * t - 0.5 * gravity * t.^2;
 
-plot(x_final, y_final);
-
 range = x_0_number + velocity_x * time;
 max_height = y_0_number + velocity_y * time / 2 - 0.5 * gravity * (time / 2)^2;
+
+p = plot(x_final, y_final, x_0_number + velocity_x * time / 2, max_height);
+p(2).Marker = 'o';
 
 set(handles.range_edit, 'String', range);
 set(handles.max_height_edit,'String',max_height);

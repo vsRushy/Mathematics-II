@@ -238,8 +238,6 @@ function angle_slider_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-angle = 90*get(handles.angle_slider, 'Value');
-set(handles.angle_number_static, 'String', angle);
 Update(handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -254,6 +252,9 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 function Update(handles)
+angle = 90*get(handles.angle_slider, 'Value');
+set(handles.angle_number_static, 'String', angle);
+
 quiver3(0, 0, 0, 1, 0, 0, 'Linewidth', 3);
 hold on;
 quiver3(0, 0, 0, 0, 1, 0, 'Linewidth', 3);

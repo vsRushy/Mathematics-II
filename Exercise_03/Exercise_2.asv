@@ -149,6 +149,8 @@ function angle_slider_edit_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+set(handles.angle_slider_edit, 'Min', 0);
+set(handles.angle_slider_edit, 'Max', 90);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -194,6 +196,7 @@ function angle_edit_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'String') returns contents of angle_edit as text
 %        str2double(get(hObject,'String')) returns contents of angle_edit as a double
+get(handles.angle_slider_edit,'String');
 
 
 % --- Executes during object creation, after setting all properties.
@@ -269,9 +272,8 @@ x_0_number = str2double(get(handles.x_0_edit,'String'));
 y_0_number = str2double(get(handles.y_0_edit,'String'));
 
 velocity_number = str2double(get(handles.velocity_edit,'String'));
-angle_number = (90*get(handles.angle_slider_edit,'Value'))/get(handles.angle_slider_edit,'Max');
-set(handles.angle_edit, 'String', angle_number);
-%angle_number = str2double(get(handles.angle_edit,'String'));
+%angle_number = (90*get(handles.angle_slider_edit,'Value'))/get(handles.angle_slider_edit,'Max');
+angle_number = str2double(get(handles.angle_edit,'String'));
 
 
 

@@ -238,7 +238,9 @@ function angle_slider_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-
+angle = 90*get(handles.angle_slider, 'Value');
+set(handles.angle_number_static, 'String', angle);
+Update(handles);
 
 % --- Executes during object creation, after setting all properties.
 function angle_slider_CreateFcn(hObject, eventdata, handles)
@@ -250,3 +252,17 @@ function angle_slider_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
+
+function Update(handles)
+quiver3(0, 0, 0, 1, 0, 0, 'Linewidth', 3);
+hold on;
+quiver3(0, 0, 0, 0, 1, 0, 'Linewidth', 3);
+hold on;
+quiver3(0, 0, 0, 0, 0, 1, 'Linewidth', 3);
+hold on;
+quiver3(0, 0, 0, 1, 1, 1, 'Linewidth', 3);
+hold on;
+
+h = rotate3d;
+h.Enable = 'on';
+axis off;

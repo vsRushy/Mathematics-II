@@ -255,15 +255,63 @@ function Update(handles)
 angle = 90*get(handles.angle_slider, 'Value');
 set(handles.angle_number_static, 'String', angle);
 
-quiver3(0, 0, 0, 1, 0, 0, 'Linewidth', 3);
+% We cannot do it with quiver3 in our opinion. We'll create vectors
+% instead, defining the axes.
+i_unit = [0 1;
+        0 0;
+        0 0];
+
+j_unit = [0 0;
+        0 1;
+        0 0];
+
+k_unit = [0 0;
+        0 0;
+        0 1];
+
+% Start points x y z    
+x = 1;
+y = 2;
+z = 3;
+
+plot3(i_unit(x, :), i_unit(y, :), i_unit(z, :), 'LineWidth', 3);
 hold on;
-quiver3(0, 0, 0, 0, 1, 0, 'Linewidth', 3);
+plot3(j_unit(x, :), j_unit(y, :), j_unit(z, :), 'LineWidth', 3);
 hold on;
-quiver3(0, 0, 0, 0, 0, 1, 'Linewidth', 3);
-hold on;
-quiver3(0, 0, 0, 1, 1, 1, 'Linewidth', 3);
+plot3(k_unit(x, :), k_unit(y, :), k_unit(z, :), 'LineWidth', 3);
 hold on;
 
-h = rotate3d;
-h.Enable = 'on';
-axis off;
+rotate3d on;
+
+% Vectors calculations
+u_vec = [str2double(get(handles.u_1_edit, 'String'));
+    str2double(get(handles.u_2_edit, 'String'));
+    str2double(get(handles.u_3_edit, 'String'))];
+
+[str2double(get(handles.v_1_edit, 'String'));
+    str2double(get(handles.v_2_edit, 'String'));
+    str2double(get(handles.v_3_edit, 'String'))];
+
+% Normalize u_vec
+u_vec = u_vec / sqrt(u_vec' * u_vec);
+
+
+
+function q_3 = MultiplyQuaternion(q_1,q_2)
+% This function multiplies the given quaterions.
+% q_3 has a module value of 1.
+
+q_1 = q_1 / sqrt(q_1' * q_1);
+q_2 = q_2 / sqrt(q_2' * q_2);
+
+q0 = q_2(1);
+q = [q_2(2); q_2(3); q_2(4)];
+
+p0 = q_1(1);
+p = [q_1(2); q_1(3); q_1(4)];
+
+aux_vec = q0 * p + p0 * q + cross(q, p);
+
+q_3 = [q0 * p0 - q' * p; aux_vec(1); aux_vec(2); aux_vec(3)];
+
+

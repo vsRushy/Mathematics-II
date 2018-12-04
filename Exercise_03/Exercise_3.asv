@@ -238,8 +238,6 @@ function angle_slider_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-angle = get(handles.angle_slider, 'Value');
-set(handles.angle_number_static, )
 Update(handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -254,15 +252,44 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 function Update(handles)
-quiver3(0, 0, 0, 1, 0, 0, 'Linewidth', 3);
+angle = 90*get(handles.angle_slider, 'Value');
+set(handles.angle_number_static, 'String', angle);
+
+% We cannot do it with quiver3 in our opinion. We'll create vectors
+% instead, defining the axes.
+i_unit = [0 1;
+        0 0;
+        0 0];
+
+j_unit = [0 0;
+        0 1;
+        0 0];
+
+k_unit = [0 0;
+        0 0;
+        0 1];
+x = 1;
+y = 2;
+z = 3;
+
+plot3(i_unit(x,:),i_unit(y,:),i_unit(z,:),'LineWidth',5);
 hold on;
-quiver3(0, 0, 0, 0, 1, 0, 'Linewidth', 3);
+plot3(jvec(x,:),jvec(y,:),jvec(z,:),'LineWidth',5);
 hold on;
-quiver3(0, 0, 0, 0, 0, 1, 'Linewidth', 3);
-hold on;
-quiver3(0, 0, 0, 1, 1, 1, 'Linewidth', 3);
+plot3(kvec(x,:),kvec(y,:),kvec(z,:),'LineWidth',5);
 hold on;
 
-h = rotate3d;
-h.Enable = 'on';
-axis off;
+rotate3d on;
+
+% Vectors calculations
+u_vec = [str2double(get(handles.u_1_edit, 'String'));
+    str2double(get(handles.u_2_edit, 'String'));
+    str2double(get(handles.u_3_edit, 'String'))];
+
+v_vec = [str2double(get(handles.v_1_edit, 'String'));
+    str2double(get(handles.v_2_edit, 'String'));
+    str2double(get(handles.v_3_edit, 'String'))];
+
+
+
+

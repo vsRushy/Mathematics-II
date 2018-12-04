@@ -281,6 +281,7 @@ hold on;
 plot3(k_unit(x, :), k_unit(y, :), k_unit(z, :), 'LineWidth', 3);
 hold on;
 
+axis off;
 rotate3d on;
 
 % Vectors calculations

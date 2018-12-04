@@ -370,8 +370,10 @@ function q_3 = MultiplyQuaternion(q_1,q_2)
 % This function multiplies the given quaterions.
 % q_3 has a module value of 1.
 
-q_1 = q_1 / sqrt(q_1' * q_1);
-q_2 = q_2 / sqrt(q_2' * q_2);
+% Uncomment the two following lines of code if you want a unit quaterion as
+% a result.
+%q_1 = q_1 / sqrt(q_1' * q_1);
+%q_2 = q_2 / sqrt(q_2' * q_2);
 
 q0 = q_2(1);
 q = [q_2(2); q_2(3); q_2(4)];

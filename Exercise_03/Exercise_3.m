@@ -252,7 +252,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 function Update(handles)
-angle = 90*get(handles.angle_slider, 'Value');
+angle = get(handles.angle_slider, 'Value');
 set(handles.angle_number_static, 'String', angle);
 
 % We cannot do it with quiver3 in our opinion. We'll create vectors

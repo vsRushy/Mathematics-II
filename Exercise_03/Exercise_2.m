@@ -268,10 +268,10 @@ function calculate_button_Callback(hObject, eventdata, handles)
 x_0_number = str2double(get(handles.x_0_edit,'String'));
 y_0_number = str2double(get(handles.y_0_edit,'String'));
 
-velocity_number = (50*get(handles.velocity_slider_edit,'Value'))/get(handles.velocity_slider_edit,'Max');
+velocity_number = get(handles.velocity_slider_edit,'Value');
 set(handles.velocity_static_number, 'String', velocity_number);
 
-angle_number = (90*get(handles.angle_slider_edit,'Value'))/get(handles.angle_slider_edit,'Max');
+angle_number = get(handles.angle_slider_edit,'Value');
 set(handles.angle_static_number, 'String', angle_number);
 
 velocity_x = cosd(angle_number) * velocity_number;

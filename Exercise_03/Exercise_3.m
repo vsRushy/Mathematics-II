@@ -73,26 +73,6 @@ function varargout = Exercise_3_OutputFcn(hObject, eventdata, handles)
 varargout{1} = handles.output;
 
 
-% --- Executes on button press in pushbutton1.
-function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-quiver3(0, 0, 0, 1, 0, 0, 'Linewidth', 2);
-hold on;
-quiver3(0, 0, 0, 0, 1, 0, 'Linewidth', 2);
-hold on;
-quiver3(0, 0, 0, 0, 0, 1, 'Linewidth', 2);
-hold on;
-quiver3(0, 0, 0, 1, 1, 1, 'Linewidth', 2);
-hold on;
-
-h = rotate3d;
-h.Enable = 'on';
-axis off;
-
-
-
 function v_1_edit_Callback(hObject, eventdata, handles)
 % hObject    handle to v_1_edit (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -238,6 +218,8 @@ function angle_slider_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+% Update the axes whenever we modify the slider in real time.
 Update(handles);
 
 % --- Executes during object creation, after setting all properties.
@@ -252,50 +234,58 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 
 function Update(handles)
+
 angle = get(handles.angle_slider, 'Value');
 set(handles.angle_number_static, 'String', angle);
 
-% We cannot do it with quiver3 in our opinion. We'll create vectors
-% instead, defining the axes.
-i_unit = [0 1;
-        0 0;
-        0 0];
-
-j_unit = [0 0;
-        0 1;
-        0 0];
-
-k_unit = [0 0;
-        0 0;
-        0 1];
-
-% Start points x y z    
-x = 1;
-y = 2;
-z = 3;
-
-plot3(i_unit(x, :), i_unit(y, :), i_unit(z, :), 'LineWidth', 3);
-hold on;
-plot3(j_unit(x, :), j_unit(y, :), j_unit(z, :), 'LineWidth', 3);
-hold on;
-plot3(k_unit(x, :), k_unit(y, :), k_unit(z, :), 'LineWidth', 3);
-hold on;
-
-axis off;
-rotate3d on;
-
-% Vectors calculations
-u_vec = [str2double(get(handles.u_1_edit, 'String'));
+u_direction = [str2double(get(handles.u_1_edit, 'String'));
     str2double(get(handles.u_2_edit, 'String'));
     str2double(get(handles.u_3_edit, 'String'))];
-
-[str2double(get(handles.v_1_edit, 'String'));
+    
+v_vector = [str2double(get(handles.v_1_edit, 'String'));
     str2double(get(handles.v_2_edit, 'String'));
     str2double(get(handles.v_3_edit, 'String'))];
 
-% Normalize u_vec
-u_vec = u_vec / sqrt(u_vec' * u_vec);
+% Define x y z, crate axes. Note that the axes need to be unitary vectors.
+x = 1;
+y = 2;
+z = 3;
+i = [0 1; 0 0; 0 0];
+j = [0 0; 0 1; 0 0];
+k = [0 0; 0 0; 0 1];
 
+% Plot the axes
+plot3(i(x, :),i(y, :),i(z, :), 'LineWidth', 3, 'Color', [255, 0, 0] / 255);
+hold on;
+plot3(j(x, :),j(y, :),j(z, :), 'LineWidth', 3, 'Color', [0, 255, 0] / 255);
+hold on;
+plot3(k(x, :),k(y, :),k(z, :), 'LineWidth', 3, 'Color', [0, 0, 255] / 255);
+hold on;
+
+u_direction = u_direction / sqrt(u_direction' * u_direction);
+u_direction = sind(angle * 0.5) * u_direction;
+
+% Create the quaternions
+u_quaternion = [cosd(angle * 0.5);
+    u_direction(1);
+    u_direction(2);
+    u_direction(3)];
+
+v_quaternion = [0;
+    v_vector(1);
+    v_vector(2);
+    v_vector(3)];
+
+v_u_quaternion = MultiplyQuaternion(u_quaternion, v_quaternion);
+u_quaternion(2 : end) = -u_quaternion(2 : end);
+v_u_quaternion = MultiplyQuaternion(v_u_quaternion, u_quaternion);
+
+final_vector = [0 v_u_quaternion(2); 0 v_u_quaternion(3); 0 v_u_quaternion(4)];
+plot3(final_vector(x, :), final_vector(y, :), final_vector(z, :), 'LineWidth', 3);
+
+hold off;
+rotate3d on;
+axis off;
 
 
 function q_3 = MultiplyQuaternion(q_1,q_2)

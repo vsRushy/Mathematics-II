@@ -278,9 +278,12 @@ v_quaternion = [0;
 
 v_u_quaternion = MultiplyQuaternion(u_quaternion, v_quaternion);
 u_quaternion(2 : end) = -u_quaternion(2 : end);
+
 v_u_quaternion = MultiplyQuaternion(v_u_quaternion, u_quaternion);
 
 final_vector = [0 v_u_quaternion(2); 0 v_u_quaternion(3); 0 v_u_quaternion(4)];
+
+% Plot final vector
 plot3(final_vector(x, :), final_vector(y, :), final_vector(z, :), 'LineWidth', 3);
 
 hold off;

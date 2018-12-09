@@ -127,7 +127,7 @@ function velocity_slider_edit_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
-set()
+
 
 % --- Executes during object creation, after setting all properties.
 function velocity_slider_edit_CreateFcn(hObject, eventdata, handles)

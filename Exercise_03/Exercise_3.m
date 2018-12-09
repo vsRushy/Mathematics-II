@@ -246,20 +246,17 @@ v_vector = [str2double(get(handles.v_1_edit, 'String'));
     str2double(get(handles.v_2_edit, 'String'));
     str2double(get(handles.v_3_edit, 'String'))];
 
-% Define x y z, crate axes. Note that the axes need to be unitary vectors.
-x = 1;
-y = 2;
-z = 3;
+% Note that the axes need to be unitary vectors.
 i = [0 1; 0 0; 0 0];
 j = [0 0; 0 1; 0 0];
 k = [0 0; 0 0; 0 1];
 
 % Plot the axes
-plot3(i(x, :),i(y, :),i(z, :), 'LineWidth', 3, 'Color', [255, 0, 0] / 255);
+plot3(i(1, :),i(2, :),i(3, :), 'LineWidth', 3, 'Color', [255, 0, 0] / 255);
 hold on;
-plot3(j(x, :),j(y, :),j(z, :), 'LineWidth', 3, 'Color', [0, 255, 0] / 255);
+plot3(j(1, :),j(2, :),j(3, :), 'LineWidth', 3, 'Color', [0, 255, 0] / 255);
 hold on;
-plot3(k(x, :),k(y, :),k(z, :), 'LineWidth', 3, 'Color', [0, 0, 255] / 255);
+plot3(k(1, :),k(2, :),k(3, :), 'LineWidth', 3, 'Color', [0, 0, 255] / 255);
 hold on;
 
 u_direction = u_direction / sqrt(u_direction' * u_direction);
@@ -284,7 +281,7 @@ v_u_quaternion = MultiplyQuaternion(v_u_quaternion, u_quaternion);
 final_vector = [0 v_u_quaternion(2); 0 v_u_quaternion(3); 0 v_u_quaternion(4)];
 
 % Plot final vector
-plot3(final_vector(x, :), final_vector(y, :), final_vector(z, :), 'LineWidth', 3);
+plot3(final_vector(1, :), final_vector(2, :), final_vector(3, :), 'LineWidth', 3);
 
 hold off;
 rotate3d on;

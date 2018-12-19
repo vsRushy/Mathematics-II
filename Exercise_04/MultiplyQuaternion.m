@@ -1,11 +1,9 @@
-function [q_3] = MultiplyQuaternion(q_1,q_2)
+function [q_3] = MultiplyQuaternion(q_1, q_2)
 % This function multiplies the given quaterions.
 % q_3 has a module value of 1.
 % --------------------------------
 % VERY IMPORTANT: q_3 = q_2 * q_1. 
 
-% We could just have used the Matlab's function norm(x), but we will leave
-% like this.
 q_1 = q_1 / sqrt(q_1' * q_1);
 q_2 = q_2 / sqrt(q_2' * q_2);
 

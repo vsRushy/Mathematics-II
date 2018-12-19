@@ -19,3 +19,4 @@ aux_vec = q0 * p + p0 * q + cross(q, p);
 
 q_3 = [q0 * p0 - q' * p; aux_vec(1); aux_vec(2); aux_vec(3)];
 
+end
